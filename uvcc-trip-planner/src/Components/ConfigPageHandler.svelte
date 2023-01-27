@@ -1,5 +1,5 @@
 <script>
-    import {page, headers, column_mappings, cavers} from "../stores.js";
+    import {page, headers, column_mappings, cavers, trip_settings, request_plan, exec_list} from "../stores.js";
 	import HeaderSelect from "./HeaderSelect.svelte";
 	import PageIncrementerBtns from "./PageIncrementerBtns.svelte";
     import Caver from "../Structures/caver.js";
@@ -41,7 +41,15 @@
         for(let i = col_count; i < data.length; i+=col_count)
         {
             if (data[i+$column_mappings["Basic Info"]["Timestamp"]] == ''){break;}
-            
+
+            let exec_status = false;
+            if($exec_list.includes(
+                `${data[i+$column_mappings["Basic Info"]["First Name"]].trim()} ${data[i+$column_mappings["Basic Info"]["Last Name"]].trim()}`
+                .toLowerCase()
+            )){
+               exec_status = true; 
+            }
+
             _cavers.push(
                     new Caver(
                         count,
@@ -59,7 +67,7 @@
                         data[i+$column_mappings["Details"]["Newcomer Status (Ropes)"]],
                         data[i+$column_mappings["Details"]["Vehicle Owner Status"]],
                         data[i+$column_mappings["Details"]["Med/Rescue Cert. Status"]],
-                        false, //default exec status             
+                        exec_status,            
                         data[i+$column_mappings["Misc"]["Trip Day (if applicable)"]],          
                     
                     )
@@ -112,19 +120,38 @@
 
     <PageIncrementerBtns/>
 {:else if $page==2}
-    {loadDataToStores()}
+    <p hidden>{loadDataToStores()}</p>
     <h3 class="generic_header">Config Step 2 - Exec Selection</h3>
     
     <div class="config__panel">
         <h4>Select exec members:</h4>
         {#each $cavers as caver}
         <span>
-            <input name="exec_select" type="checkbox" on:change={(event)=>{caver.exec_status=event.value;}}>
+            <input name="exec_select" type="checkbox" checked={caver.exec_status} on:change={(event)=>{caver.exec_status=event.value;}}>
             <label for="exec_select" >{caver.firstname} {caver.lastname}</label>
         </span>
         {/each}
     </div>
 
     <PageIncrementerBtns/>
-{/if}
+{:else if $page==3}
+    <h3 class="generic_header">Config Step 3 - Trip Settings</h3>
 
+    <div class="config__panel">
+        <span>
+            <label for="maxCavers">Maximum # of Cavers:</label>
+            <input name="maxCavers" type="number" on:change={(event)=>{$trip_settings["Maximum # of Cavers"]=event.value;}}/>
+        </span>
+    </div>
+    <button id="process_form_btn" on:click={$request_plan=true}>Plan!</button>
+{/if}
+<style>
+    .config__panel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #process_form_btn {
+       margin: 1rem 5rem 1rem 5rem;
+    }
+</style>

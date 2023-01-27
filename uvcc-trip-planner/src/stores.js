@@ -1,4 +1,6 @@
-import {writable} from 'svelte/store';
+import {readable,writable} from 'svelte/store';
+
+export const request_plan = false;
 
 export const page = writable(0);
 
@@ -38,3 +40,30 @@ export const column_mappings = writable({
 
 });
     
+export const trip_settings = writable({
+    "Maximum # of Cavers": null,
+
+})
+
+export const exec_list = readable(
+    [
+        "simon grieshaber-otto",
+        "nathan inbar",
+        "nikolay senilov",
+        "anju otsu",
+        "francis tran",
+        "ryles forrest",
+        "aline thévard",
+        "avie waterfall",
+        "lena fellenius",
+        "amanda kervin",
+        "wil munro",
+        "alex sargent-laskin",
+        "sara newman",
+        "anna bartnik",
+        "reece boulanger",
+        "dmitri leo ros-ov",
+        "jane buzath",
+    ]
+)
+

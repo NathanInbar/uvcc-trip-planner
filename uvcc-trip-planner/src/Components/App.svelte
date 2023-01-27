@@ -55,7 +55,4 @@
         background-color: var(--dark_grey_fade);
     }
 
-    #process_form_btn {
-       margin: 1rem 5rem 1rem 5rem;
-    }
 </style>
