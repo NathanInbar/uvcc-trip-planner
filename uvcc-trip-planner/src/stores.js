@@ -36,13 +36,28 @@ export const column_mappings = writable({
     },
     "Misc":
     {
-        "Trip Day (if applicable)" : null,
+        "Trip Day Pref (if applicable)" : null,
     }
 
 });
     
+export const response_mappings = writable({
+
+    "Trip Day Preferences" : [],
+    "Either Day Response": null,
+
+    "Vehicle Capability Reponses": {
+        "Offroad Capable": null,
+        "City Car": null,
+        "No Car": null,
+    }
+    
+
+})
+
 export const trip_settings = writable({
     "Maximum # of Cavers": null,
+    "# of Seperate Trip Days": 1,
 })
 
 export const exec_list = readable(

@@ -1,6 +1,6 @@
 <script>
-    import {page, headers, column_mappings, cavers, trip_settings, request_plan, exec_list} from "../stores.js";
-	import HeaderSelect from "./HeaderSelect.svelte";
+    import {page, headers, column_mappings, cavers, trip_settings, request_plan, exec_list, response_mappings} from "../stores.js";
+    import HeaderSelect from "./HeaderSelect.svelte";
 	import PageIncrementerBtns from "./PageIncrementerBtns.svelte";
     import Caver from "../Structures/caver.js";
 
@@ -98,6 +98,12 @@
     }
     
 
+// ---
+
+    //adjust the array size of trip day preferences based on how many days are entered
+    $: if ($trip_settings["# of Seperate Trip Days"] > 0)
+        $response_mappings["Trip Day Preferences"] = Array($trip_settings["# of Seperate Trip Days"])
+
 </script>
 
 {#if $page==0}
@@ -111,8 +117,8 @@
     <div class="config__panel">
         {#each Object.entries($column_mappings) as [section,items]}
             <h4>{section}:</h4>
-            {#each Object.entries(items) as [label,col_val]}
-            <HeaderSelect section={section} label={label} col={col_val}/>
+            {#each Object.entries(items) as [label,_]}
+            <HeaderSelect section={section} label={label}/>
             {/each}
         {/each}
 
@@ -121,9 +127,57 @@
 
     <PageIncrementerBtns/>
 {:else if $page==2}
-    <p hidden>{loadDataToStores()}</p>
-    <h3 class="generic_header">Config Step 2 - Exec Selection</h3>
-    
+    <h3 class="generic_header">Config Step 2 - Trip Settings</h3>
+
+    <div class="config__panel">
+        <span>
+            <label for="maxCavers">Maximum # of Cavers:</label>
+            <input name="maxCavers" type="number" bind:value={$trip_settings["Maximum # of Cavers"]}/>
+        </span>
+        <span>
+            <label for="tripDays"># of Seperate Trip Days</label>
+            <input type="number" bind:value={$trip_settings["# of Seperate Trip Days"]} name="tripDays" id="tripDays"/>
+        </span>
+
+    </div>
+
+    <PageIncrementerBtns/>
+{:else if $page==3}
+    <h3 class="generic_header">Config Step 3 - Response Mapping</h3>
+    <p>map the given information to text response EXACTLY as it appears in the spreadsheet</p>
+
+    <div class="config__panel">
+        <span class="settings__span">
+            <h4 for="tripDays">Trip Day Preference Responses (if applicable):</h4>            
+        </span>
+
+        {#each $response_mappings["Trip Day Preferences"] as _, i}
+            <span class="settings__span">
+                <label for="">Day {i+1}:</label>
+                <input class="settings__input" type="text" bind:value={$response_mappings["Trip Day Preferences"][i]}/>
+            </span>
+        {/each}
+
+        <span class="settings__span">
+            <label for="">Either/Any:</label>
+            <input class="settings__input" type="text" bind:value={$response_mappings["Either Day Response"]} />
+        </span>
+
+        <h4 for="tripDays">Vehicle Capability Responses:</h4>            
+        {#each Object.entries($response_mappings["Vehicle Capability Reponses"]) as [label,_]}
+            <span class="settings__span">
+                <label for="">{label}:</label>
+                <input class="settings__input" type="text" bind:value={$response_mappings["Vehicle Capability Reponses"][label]} />
+            </span>
+        {/each}
+
+    </div>
+
+<PageIncrementerBtns/>
+{:else if $page==4}
+    <p hidden>{loadDataToStores()}</p> <!--loads data into caver objects-->
+    <h3 class="generic_header">Config Step 4 - Exec Selection</h3>
+
     <div class="config__panel">
         <h4>Select exec members:</h4>
         {#each $cavers as caver}
@@ -134,20 +188,23 @@
         {/each}
     </div>
 
-    <PageIncrementerBtns/>
-{:else if $page==3}
-    <h3 class="generic_header">Config Step 3 - Trip Settings</h3>
-
-    <div class="config__panel">
-        <span>
-            <label for="maxCavers">Maximum # of Cavers:</label>
-            <input name="maxCavers" type="number" on:change={(event)=>{$trip_settings["Maximum # of Cavers"]=event.value;}}/>
-        </span>
-
-    </div>
+    <PageIncrementerBtns up={false}/>
     <button id="process_form_btn" on:click={()=>{$request_plan=true}}>Plan!</button>
 {/if}
+
 <style>
+    .settings__span {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .settings__input {
+        width: 50ch;
+    }
+    p {
+        margin-bottom: 0.5rem;
+        text-decoration: underline;
+    }
     .config__panel {
         display: flex;
         flex-direction: column;

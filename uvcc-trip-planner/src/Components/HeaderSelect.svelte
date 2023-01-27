@@ -3,20 +3,20 @@
 
     export let section;
     export let label;
-    export let col;
+    // export let col;
 
-    function update_mapping()
-    {
-        $column_mappings[section][label]=col;
-        console.log($column_mappings);
-    }
+    // function update_mapping()
+    // {
+    //     $column_mappings[section][label]=col;
+    //     console.log($column_mappings);
+    // }
 
 </script>
 
 <span>
     <label for="headerSelect">{label}:&nbsp;</label>
 
-    <select name="headerselect" id="headerSelect" bind:value={col} on:change={()=>{update_mapping();}}>
+    <select name="headerselect" id="headerSelect" bind:value={$column_mappings[section][label]}>
         <option selected disabled hidden value={-1}> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</option>
         {#each $headers as header,i}
         <option value={i}>{header}</option>
