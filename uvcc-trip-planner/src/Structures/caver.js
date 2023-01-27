@@ -1,14 +1,16 @@
 
 class Caver {
-    constructor(timestamp, firstname, lastname, vnumber, 
+    constructor(id,timestamp, firstname, lastname, vnumber, email, 
         phone, emergency_name, emergency_relation, emergency_phone, 
         med_ins_status, newcomer_cave_status, newcomer_ropes_status, 
-        vehicle_owner_status, medi_cert_status, admin_status)
+        vehicle_owner_status, medi_cert_status, exec_status, trip_day=null)
         {
+            this.id=id;
             this.timestamp = timestamp;
             this.firstname = firstname;
             this.lastname = lastname;
             this.vnumber = vnumber;
+            this.email = email;
             this.phone = phone;
 
             this.emergency_name = emergency_name;
@@ -21,6 +23,9 @@ class Caver {
 
             this.vehicle_owner_status = vehicle_owner_status;
             this.medi_cert_status = medi_cert_status;
-            this.admin_status = admin_status;
+            this.exec_status = exec_status;
+
+            this.trip_day= trip_day; //preferred trip day if trip has multiple day options
         }
 }
+export default Caver;
