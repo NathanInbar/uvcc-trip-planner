@@ -3,7 +3,7 @@ class Caver {
     constructor(id,timestamp, firstname, lastname, vnumber, email, 
         phone, emergency_name, emergency_relation, emergency_phone, 
         med_ins_status, newcomer_cave_status, newcomer_ropes_status, 
-        vehicle_owner_status, medi_cert_status, exec_status, trip_day=null)
+        vehicle_owner_status, vehicle_seat_count, medi_cert_status, exec_status, trip_day=null)
         {
             this.id=id;
             this.timestamp = timestamp;
@@ -22,6 +22,7 @@ class Caver {
             this.newcomer_ropes_status = newcomer_ropes_status;
 
             this.vehicle_owner_status = vehicle_owner_status;
+            this.vehicle_seat_count = vehicle_seat_count;
             this.medi_cert_status = medi_cert_status;
             this.exec_status = exec_status;
 

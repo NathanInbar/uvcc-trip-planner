@@ -1,6 +1,6 @@
 import {readable,writable} from 'svelte/store';
 
-export const request_plan = false;
+export const request_plan = writable(false);
 
 export const page = writable(0);
 
@@ -31,6 +31,7 @@ export const column_mappings = writable({
         "Newcomer Status (Caves)" : null,
         "Newcomer Status (Ropes)" : null,
         "Vehicle Owner Status" : null,
+        "Vehicle Seat Count" : null,
         "Med/Rescue Cert. Status" : null,
     },
     "Misc":
@@ -42,7 +43,6 @@ export const column_mappings = writable({
     
 export const trip_settings = writable({
     "Maximum # of Cavers": null,
-
 })
 
 export const exec_list = readable(

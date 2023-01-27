@@ -66,6 +66,7 @@
                         data[i+$column_mappings["Details"]["Newcomer Status (Caves)"]],
                         data[i+$column_mappings["Details"]["Newcomer Status (Ropes)"]],
                         data[i+$column_mappings["Details"]["Vehicle Owner Status"]],
+                        data[i+$column_mappings["Details"]["Vehicle Seat Count"]],
                         data[i+$column_mappings["Details"]["Med/Rescue Cert. Status"]],
                         exec_status,            
                         data[i+$column_mappings["Misc"]["Trip Day (if applicable)"]],          
@@ -142,8 +143,9 @@
             <label for="maxCavers">Maximum # of Cavers:</label>
             <input name="maxCavers" type="number" on:change={(event)=>{$trip_settings["Maximum # of Cavers"]=event.value;}}/>
         </span>
+
     </div>
-    <button id="process_form_btn" on:click={$request_plan=true}>Plan!</button>
+    <button id="process_form_btn" on:click={()=>{$request_plan=true}}>Plan!</button>
 {/if}
 <style>
     .config__panel {

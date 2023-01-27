@@ -1,4 +1,5 @@
 <script>
+    import {request_plan} from "../stores.js";
 	import ConfigPageHandler from "./ConfigPageHandler.svelte";
 
 </script>
@@ -18,6 +19,9 @@
         <ConfigPageHandler />
     </div>
 
+    {#if $request_plan}
+        <div class="loading__panel"><h1>planning . . .</h1></div>
+    {/if}
 </div>
 
 <style>
@@ -54,5 +58,9 @@
         align-items: center;
         background-color: var(--dark_grey_fade);
     }
-
+    .loading__panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
