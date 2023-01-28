@@ -3,6 +3,7 @@
     import HeaderSelect from "./HeaderSelect.svelte";
 	import PageIncrementerBtns from "./PageIncrementerBtns.svelte";
     import Caver from "../Structures/caver.js";
+	import TripOutput from "./TripOutput.svelte";
 
     var files = []
     var data = []
@@ -66,6 +67,7 @@
                         data[i+$column_mappings["Details"]["Newcomer Status (Caves)"]],
                         data[i+$column_mappings["Details"]["Newcomer Status (Ropes)"]],
                         data[i+$column_mappings["Details"]["Vehicle Owner Status"]],
+                        data[i+$column_mappings["Details"]["Vehicle Type"]],
                         data[i+$column_mappings["Details"]["Vehicle Seat Count"]],
                         data[i+$column_mappings["Details"]["Med/Rescue Cert. Status"]],
                         exec_status,            
@@ -135,10 +137,13 @@
             <input name="maxCavers" type="number" bind:value={$trip_settings["Maximum # of Cavers"]}/>
         </span>
         <span>
-            <label for="tripDays"># of Seperate Trip Days</label>
+            <label for="tripDays"># of Seperate Trip Days:</label>
             <input type="number" bind:value={$trip_settings["# of Seperate Trip Days"]} name="tripDays" id="tripDays"/>
         </span>
-
+        <span>
+            <label for="rtReq">Ropes Training Required?</label>
+            <input type="checkbox" bind:value={$trip_settings["Ropes Training Required?"]} name="rtReq" id="rtReq"/>
+        </span>
     </div>
 
     <PageIncrementerBtns/>
@@ -189,7 +194,11 @@
     </div>
 
     <PageIncrementerBtns up={false}/>
-    <button id="process_form_btn" on:click={()=>{$request_plan=true}}>Plan!</button>
+    <button id="process_form_btn" on:click={()=>{$request_plan=true; $page=$page+1;}}>Plan!</button>
+{:else if $page==5}
+    {#if $request_plan == false}
+        <TripOutput />
+    {/if}
 {/if}
 
 <style>

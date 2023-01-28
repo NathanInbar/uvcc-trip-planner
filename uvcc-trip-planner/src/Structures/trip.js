@@ -8,14 +8,22 @@ class Trip
         this.seats = 0;
     }
 
-    add_caver(caver)
-    {
-        const regex_yes = /yes/i;
+    add_caver(caver){
         this.cavers.push(caver);
-
-        if(regex_yes.test(caver.vehicle_owner_status))
-                this.seats+=parseInt(caver.vehicle_seat_count);
+        this.seats += caver.count_seats();
     }
+
+    is_full_max(max_cavers){
+        if (this.cavers.length>=max_cavers)
+            return true;
+        return false;
+    }
+    is_seats_full(){
+        return this.seats - this.cavers.length <= 0
+    }
+    get_seats(){return this.seats;}
+
+    get_cavers(){return this.cavers;}
 }
 
 export default Trip;

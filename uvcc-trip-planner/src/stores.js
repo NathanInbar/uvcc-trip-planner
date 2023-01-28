@@ -7,6 +7,8 @@ export const page = writable(0);
 export const headers = writable([]);
 export const cavers = writable([]);
 
+export const finished_trips = writable({});
+
 export const column_mappings = writable({
 
     "Basic Info":
@@ -31,6 +33,7 @@ export const column_mappings = writable({
         "Newcomer Status (Caves)" : null,
         "Newcomer Status (Ropes)" : null,
         "Vehicle Owner Status" : null,
+        "Vehicle Type" : null,
         "Vehicle Seat Count" : null,
         "Med/Rescue Cert. Status" : null,
     },
@@ -58,6 +61,7 @@ export const response_mappings = writable({
 export const trip_settings = writable({
     "Maximum # of Cavers": null,
     "# of Seperate Trip Days": 1,
+    "Ropes Training Required?": false,
 })
 
 export const exec_list = readable(
