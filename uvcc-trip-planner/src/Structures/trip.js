@@ -24,6 +24,8 @@ class Trip
     get_seats(){return this.seats;}
 
     get_cavers(){return this.cavers;}
+
+    get_num_cavers(){return this.cavers.length;}
 }
 
 export default Trip;

@@ -33,7 +33,7 @@
 
     function loadDataToStores()
     {
-
+        //console.log(data);
         //process csv rows into Caver object array, load into store
         let col_count = $headers.length+1
         let _cavers = []
@@ -67,11 +67,10 @@
                         data[i+$column_mappings["Details"]["Newcomer Status (Caves)"]],
                         data[i+$column_mappings["Details"]["Newcomer Status (Ropes)"]],
                         data[i+$column_mappings["Details"]["Vehicle Owner Status"]],
-                        data[i+$column_mappings["Details"]["Vehicle Type"]],
                         data[i+$column_mappings["Details"]["Vehicle Seat Count"]],
                         data[i+$column_mappings["Details"]["Med/Rescue Cert. Status"]],
                         exec_status,            
-                        data[i+$column_mappings["Misc"]["Trip Day (if applicable)"]],          
+                        data[i+$column_mappings["Misc"]["Trip Day Pref (if applicable)"]],          
                     
                     )
                 );
@@ -196,9 +195,11 @@
     <PageIncrementerBtns up={false}/>
     <button id="process_form_btn" on:click={()=>{$request_plan=true; $page=$page+1;}}>Plan!</button>
 {:else if $page==5}
+    
     {#if $request_plan == false}
         <TripOutput />
     {/if}
+    
 {/if}
 
 <style>

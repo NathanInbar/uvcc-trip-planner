@@ -1,5 +1,6 @@
 <script>
     import {page, cavers, finished_trips, trip_settings, response_mappings, request_plan} from "../stores.js";
+	import Caver from "../Structures/caver.js";
     import Trip from "../Structures/trip.js";
 
     $: if($request_plan)
@@ -39,6 +40,7 @@
             return count;
         }
         function count_full_trips_seats(){
+            console.log("method pass: count_full_trip_seats")
             let count = 0;
             Object.values(trips).forEach(trp => {
                 if (trp.is_seats_full()){count+=1;}
@@ -47,8 +49,9 @@
         }
         function rotate_arb_trip(){
             //rotate to next non-full trip
+
             do{
-                if (arb_trip_i == Object.values(trips).length)
+                if (arb_trip_i == Object.values(trips).length-1)
                     arb_trip_i = 0;
                 else
                     arb_trip_i +=1;
@@ -70,11 +73,13 @@
             }
             //designate them using the arbitrary trip indexer
             else if (day_pref == $response_mappings["Either Day Response"]){
+
                 Object.values(trips)[arb_trip_i].add_caver(caver);
                 rotate_arb_trip();
             }
             //designate them to the day they want
             else{
+
                 trips[day_pref].add_caver(caver);
             }
             caver.set_designated(true);
@@ -84,14 +89,20 @@
         let max_seats = count_seats();
         let num_execs = count_execs();
 
-        console.log("creating trip list ...")
+
         for(let i = 0; i < days_to_plan; i++)
         {
             trips[$response_mappings["Trip Day Preferences"][i]] = new Trip(
                 $response_mappings["Trip Day Preferences"][i]
             )
         }
-        console.log(`created trips! ${trips}`);
+        console.log(`created trips!`);
+        console.log(trips);
+
+        // let admn = new Caver(999, "1/23/2023 17:06:04", "Joe", "Biden", "V00000", "jmama@gmail.com", "9491111111", "Obama", "Father",
+        //                 "9490000000", "Yes", "No", "No", "Yes. It is sick 4x4 and you will be so excited.",
+        //                 "5", "Wilderness first aid", false, "Saturday - Sept. 24, 2022");
+        // trips["Saturday - Sept. 24, 2022"].add_caver(admn);
 
         console.log("doing first pass ...");
         //first pass: designate execs with cars that are 4x4s
@@ -104,7 +115,8 @@
                     }
             }
         }
-        console.log(`first pass done!\n${trips}`);
+        console.log(`first pass done!`);
+        console.log(trips);
 
         console.log("doing second pass ...");
         //second pass: designate the rest of the execs that have city cars
@@ -117,7 +129,8 @@
                     }
             }
         }  
-        console.log(`second pass done!\n${trips}`);
+        console.log(`second pass done!`);
+        console.log(trips);
 
         console.log("doing third pass ...");
 
@@ -128,7 +141,8 @@
                 designate_caver(caver);
             }
         }  
-        console.log(`third pass done!\n${trips}`);
+        console.log(`third pass done!`);
+        console.log(trips);
 
         //evaluate seats per trip. < max cavers?
         //yes- third pass: add drivers to each trip until seats >= max cavers, or end of list
@@ -139,14 +153,15 @@
             let i = 0;
             while(trip.get_seats()<max_cavers && i < $cavers.length){
                 let caver = $cavers[i];
-                if(!caver.is_designated() && (caver.get_pref_trip_day() == trip.day_name || caver.get_pref_trip_day() == $response_mappings["Either Day Response"]) && caver.has_vehicle()){
-                    designate_caver(caver, forceday=trip.day_name);
+                if(!caver.is_designated() && (caver.get_pref_trip_day() == trip.day_name || caver.get_pref_trip_day() == $response_mappings["Either Day Response"]) && caver.has_vehicle()!= $response_mappings["Vehicle Capability Reponses"]["No Car"]){
+                    designate_caver(caver, trip.day_name);
                     //bypasses the "either" rotation to force someone who has no preference to join this trip
                 }
                 i+=1;
             }
         });
-        console.log(`fourth pass done!\n${trips}`);
+        console.log(`fourth pass done!`);
+        console.log(trips);
 
         //now we should have a correct number of drivers, (contingent on availability of course)
 
@@ -154,22 +169,48 @@
         //fifth pass: add non execs, non drivers, based on first come first serve (correlated w index in cavers list)
         console.log("doing fifth pass (filling remaining seats)...");
 
-        let i = 0;
-        while(count_full_trips_seats()<Object.values(trips).length && i < $cavers.length)//while we have open seats
+        // let i = 0;
+        // while(i < $cavers.length && count_full_trips_seats() < Object.values(trips).length)//while we have open seats
+        // {
+        //     let caver = $cavers[i];
+        //     if(!caver.is_designated()) //add by time
+        //         {designate_caver(caver);}
+        //     i+=1;
+        //     console.log("running");
+        // }
+        for(let i = 0; i < $cavers.length; i++)
         {
             let caver = $cavers[i];
-            if(!caver.is_designated()) //add by time
-                designate_caver(caver);
-            i+=1;
+            if(caver.is_designated()){continue;}
+
+            let day_pref = caver.get_pref_trip_day();
+            if (day_pref == $response_mappings["Either Day Response"]) //find next open trip for them if they have no pref
+            {
+                for(let j = 0; i < Object.values(trips).length; j++){
+                    let _trip = Object.values(trips)[j];
+                    if(!_trip.is_seats_full()){
+                        designate_caver(caver,_trip.day_name);
+                    }
+                }
+            }
+            else if(trips[day_pref] != null && trips[day_pref].is_seats_full()){//seats are full on their preferred day
+                continue;//go to the next person
+                // console.log(caver);
+                // console.log(day_pref);
+                // console.log(trips[day_pref]);
+            }
+            else if (trips[day_pref] != null && trips[day_pref].get_num_cavers()<= max_cavers){//preserves hard cap even if there are more seats
+                designate_caver(caver);}
         }
-        console.log(`fifth pass done!\n${trips}`);
+        console.log(`fifth pass done!`);
+        console.log(trips);
 
         //both trips should now be as full as they can be capped first by driver avail, then by seat cap.
 
         //add trips to store
         $finished_trips = trips;
-        console.log(`finished_trips store: ${$finished_trips}`);
-        $request_plan = false;
+        console.log(`finished_trips store:`);
+        console.log($finished_trips);
        
 
     }
