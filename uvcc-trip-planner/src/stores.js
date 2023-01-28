@@ -13,33 +13,32 @@ export const column_mappings = writable({
 
     "Basic Info":
     {
-        "Timestamp" : null,
-        "First Name" : null,
-        "Last Name" : null,
-        "UVic #" : null,
-        "Email" : null,
-        "Phone" : null,
+        "Timestamp" : 0,
+        "First Name" : 1,
+        "Last Name" : 2,
+        "UVic #" : 3,
+        "Email" : 5,
+        "Phone" : 6,
     },
     "Emergency Info":
     {
-        "Name" : null,
-        "Relation" : null,
-        "Phone" : null,
+        "Name" : 7,
+        "Relation" : 8,
+        "Phone" : 9,
 
     },
     "Details":
     {
-        "Med Insurance Status" : null,
-        "Newcomer Status (Caves)" : null,
-        "Newcomer Status (Ropes)" : null,
-        "Vehicle Owner Status" : null,
-        "Vehicle Type" : null,
-        "Vehicle Seat Count" : null,
-        "Med/Rescue Cert. Status" : null,
+        "Med Insurance Status" : 10,
+        "Newcomer Status (Caves)" : 11,
+        "Newcomer Status (Ropes)" : 12,
+        "Vehicle Owner Status" : 13,
+        "Vehicle Seat Count" : 14,
+        "Med/Rescue Cert. Status" : 18,
     },
     "Misc":
     {
-        "Trip Day Pref (if applicable)" : null,
+        "Trip Day Pref (if applicable)" : 4,
     }
 
 });
@@ -47,21 +46,21 @@ export const column_mappings = writable({
 export const response_mappings = writable({
 
     "Trip Day Preferences" : [],
-    "Either Day Response": null,
+    "Either Day Response": "Either day is fine!",
 
     "Vehicle Capability Reponses": {
-        "Offroad Capable": null,
-        "City Car": null,
-        "No Car": null,
+        "Offroad Capable": "Yes. It is sick 4x4 and you will be so excited.",
+        "City Car": "Yes, its a city car but it can still transport humans.",
+        "No Car": "Blah no.",
     }
     
 
 })
 
 export const trip_settings = writable({
-    "Maximum # of Cavers": null,
-    "# of Seperate Trip Days": 1,
-    "Ropes Training Required?": false,
+    "Maximum # of Cavers": 20,
+    "# of Seperate Trip Days": 2,
+    //"Ropes Training Required?": false,
 })
 
 export const exec_list = readable(
