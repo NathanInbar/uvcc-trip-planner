@@ -29,6 +29,8 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        margin: 1.5% 1.5% 2.5% 1.5%;
+
     }
     #body__header__container > h1 {
         font-size: 6rem;
@@ -37,8 +39,7 @@
     #img__logo {
         height: auto;
         width: 150px;
-        margin-left: 1rem;
-        margin-right: 1rem;
+        margin-right: 1.5%;
     }
     #body__container {
         display: flex;

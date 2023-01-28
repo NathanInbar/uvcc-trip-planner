@@ -26,6 +26,10 @@ class Trip
     get_cavers(){return this.cavers;}
 
     get_num_cavers(){return this.cavers.length;}
+
+    pop(){
+        this.cavers.pop();
+    }
 }
 
 export default Trip;

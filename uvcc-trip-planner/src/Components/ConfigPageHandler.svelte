@@ -139,7 +139,7 @@
             <label for="tripDays"># of Seperate Trip Days:</label>
             <input type="number" bind:value={$trip_settings["# of Seperate Trip Days"]} name="tripDays" id="tripDays"/>
         </span>
-        <span>
+        <span hidden>
             <label for="rtReq">Ropes Training Required?</label>
             <input type="checkbox" bind:value={$trip_settings["Ropes Training Required?"]} name="rtReq" id="rtReq"/>
         </span>
@@ -199,7 +199,7 @@
     {#if $request_plan == false}
         <TripOutput />
     {/if}
-    
+
 {/if}
 
 <style>

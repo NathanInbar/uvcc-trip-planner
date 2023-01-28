@@ -186,7 +186,8 @@
             let day_pref = caver.get_pref_trip_day();
             if (day_pref == $response_mappings["Either Day Response"]) //find next open trip for them if they have no pref
             {
-                for(let j = 0; i < Object.values(trips).length; j++){
+                console.log(caver);
+                for(let j = 0; j < Object.values(trips).length; j++){
                     let _trip = Object.values(trips)[j];
                     if(!_trip.is_seats_full()){
                         designate_caver(caver,_trip.day_name);
@@ -206,6 +207,14 @@
         console.log(trips);
 
         //both trips should now be as full as they can be capped first by driver avail, then by seat cap.
+
+        //trim trips down
+        Object.values(trips).forEach(trip=>{
+            while(trip.get_num_cavers()>max_cavers){
+                trip.pop();
+            }
+        })
+
 
         //add trips to store
         $finished_trips = trips;

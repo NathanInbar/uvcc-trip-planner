@@ -2,7 +2,7 @@
     import {response_mappings, finished_trips} from "../stores.js";
 
 </script>
-
+    <span class="member__legend">Sign up #: First Last ?[Driver] ?[Seats] ?[Vehicle Capability] </span>
     <!-- {Object.keys($finished_trips).length} -->
     <div class="trip__members">
         {#each Object.entries($finished_trips) as [name,trip]}
@@ -13,7 +13,7 @@
                 {#each trip.get_cavers() as caver}
                     <p class="{caver.is_exec() == true ? "exec_member":''}">
                     
-                    {caver.firstname} {caver.lastname}
+                    {caver.id+1}: {caver.firstname} {caver.lastname}
                     {#if caver.has_vehicle() != $response_mappings["Vehicle Capability Reponses"]["No Car"]}[Driver] [{caver.count_seats()}]
                         {#if caver.has_vehicle() == $response_mappings["Vehicle Capability Reponses"]["Offroad Capable"]}[offroad]
                         {:else}[city]
@@ -26,7 +26,7 @@
         {/each}
     </div>
 
-    <button>Download CSV</button>
+    <button hidden>Download CSV</button>
 
 <style>
     p {
@@ -34,6 +34,10 @@
     }
     button {
         margin-bottom: 1rem;
+    }
+    .member__legend {
+        margin-top: 1rem;
+        color: var(--dark_grey);
     }
     .trip__members {
         display: flex;
