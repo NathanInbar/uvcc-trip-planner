@@ -1,6 +1,6 @@
 import { readable, writable } from 'svelte/store';
 
-const _debug = true;	
+const _debug = false;	
 
 export const DEBUG = readable(_debug);
 
