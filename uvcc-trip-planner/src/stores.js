@@ -1,6 +1,6 @@
 import {readable,writable} from 'svelte/store';
 
-export const DEBUG = readable(true);
+export const DEBUG = readable(false);
 
 export const request_plan = writable(false);
 
@@ -15,28 +15,28 @@ export const column_mappings = writable({
 
     "Basic Info":
     {
-        "Timestamp" : 0,
-        "First Name" : 1,
-        "Last Name" : 2,
-        "UVic #" : 3,
-        "Email" : 5,
-        "Phone" : 6,
+        "Timestamp" : null,
+        "First Name" : null,
+        "Last Name" : null,
+        "UVic #" : null,
+        "Email" : null,
+        "Phone" : null,
     },
     "Emergency Info":
     {
-        "Name" : 7,
-        "Relation" : 8,
-        "Phone" : 9,
+        "Name" : null,
+        "Relation" : null,
+        "Phone" : null,
 
     },
     "Details":
     {
-        "Med Insurance Status" : 10,
-        "Newcomer Status (Caves)" : 11,
-        "Newcomer Status (Ropes)" : 12,
-        "Vehicle Owner Status" : 13,
-        "Vehicle Seat Count" : 14,
-        "Med/Rescue Cert. Status" : 18,
+        "Med Insurance Status" : null,
+        "Newcomer Status (Caves)" : null,
+        "Newcomer Status (Ropes)" : null,
+        "Vehicle Owner Status" : null,
+        "Vehicle Seat Count" : null,
+        "Med/Rescue Cert. Status" : null,
     },
     "Misc":
     {
