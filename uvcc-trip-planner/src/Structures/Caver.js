@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { response_mappings } from '../stores';
+import { DEBUG, response_mappings } from '../stores';
 
 class Caver {
 	constructor(id, exec_status, info) {

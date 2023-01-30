@@ -69,11 +69,12 @@
 		//yes- fourth pass: add drivers to each trip until seats >= max cavers, or end of list
 		//no- skip
 		for (const trip of manager.get_trips()) {
-			for (let i = 0; !trip.is_at_seats_capacity() && i < $cavers.length; i++) {
+			for (let i = 0; !trip.has_enough_seats() && i < $cavers.length; i++) {
 				let caver = $cavers[i];
 				if (
 					!caver.is_designated() &&
-					(caver.get_pref_trip_day() == trip.day_name || caver.has_no_day_preference())
+					(caver.get_pref_trip_day() == trip.get_name() || caver.has_no_day_preference()) &&
+					caver.has_vehicle()
 				) {
 					//bypasses the manager to force someone who has no preference to join this trip
 					trip.add_caver(caver);

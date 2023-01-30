@@ -22,7 +22,11 @@ class Trip {
 	}
 
 	is_at_seats_capacity() {
-		return this.seats - this.cavers.length <= 0;
+		return (this.get_seats() - this.get_num_cavers()) <= 0;
+	}
+
+	has_enough_seats() {
+		return (this.max_cavers - this.get_seats()) <= 0;
 	}
 
 	get_name() {
