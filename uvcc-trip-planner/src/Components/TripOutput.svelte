@@ -2,26 +2,14 @@
     import {cavers, finished_trips} from "../stores.js";
 	import CaverListing from "./CaverListing.svelte";
 
-
-    var email_string = get_email_string();
-
-    function get_email_string(){
-        let out = "";
-        Object.values($finished_trips).forEach(trip=> {
-            trip.get_cavers().forEach(caver => {
-                out.concat(`${caver.get_email()},`)
-            })
-        })
-        return out;
-    }
-
 </script>
+<div class="trip_output__container">
     <span class="member__legend">
         Filter Settings: execs with offroad capability > execs with cars > execs
                     > (IF trip does not have enough seats) members with cars
                     > members by time
     </span>
-
+    <hr>
     <span class="member__legend">[Sign up # (by time)]: [First] [Last] ?[Driver] ?[Seats] ?[Vehicle Capability] </span>
     <!-- {Object.keys($finished_trips).length} -->
     <h3>total sign-ups: {$cavers.length}</h3>
@@ -45,14 +33,38 @@
             {/if}
         {/each}
 
+
+    <h4>email strings: </h4>
+    <div class="emStr__container">
+        {#each Object.entries($finished_trips) as [name,trip]}
+            <div class="emStrs">
+                <label for="emStr" style="text-decoration:underline">{name}:</label>
+                {#each trip.get_cavers() as caver}
+                    {caver.get_email()},
+                {/each}
+            </div>
+        {/each}
+    </div>
+</div>
+
+    <button hidden>Download CSV</button>
     </div>
 
-    <h4>email string: </h4>
-    <input type="text" bind:value={email_string} />
-
-    <button>Download CSV</button>
-
 <style>
+    .trip_output__container {
+        margin: 1rem;
+    }
+    .emStr__container {
+        display: flex;
+        flex-direction: row;
+    }
+    .emStrs {
+        display: inline-block;
+        max-width: 15rem;
+        overflow-wrap: break-word;
+        margin: 1rem;
+    }
+
     hr {
         opacity: 0.2;
         border-top: 1px dotted black;

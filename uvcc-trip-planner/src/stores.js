@@ -1,6 +1,6 @@
 import {readable,writable} from 'svelte/store';
 
-export const DEBUG = readable(false);
+export const DEBUG = readable(true);
 
 export const request_plan = writable(false);
 
@@ -40,7 +40,7 @@ export const column_mappings = writable({
     },
     "Misc":
     {
-        "Trip Day Pref (if applicable)" : 4,
+        "Trip Day Pref (if applicable)" : null,
     }
 
 });
@@ -48,7 +48,7 @@ export const column_mappings = writable({
 export const response_mappings = writable({
 
     "Trip Day Preferences" : [],
-    "Either Day Response": "Either day is fine!",
+    "Either Day Response": "",
 
     "Vehicle Capability Reponses": {
         "Offroad Capable": "Yes. It is sick 4x4 and you will be so excited.",

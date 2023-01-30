@@ -199,7 +199,9 @@
 {:else if $page==5}
     
     {#if $request_plan == false}
+    <div style="max-width:min-content">
         <TripOutput />
+    </div>
     {/if}
 
 {/if}
