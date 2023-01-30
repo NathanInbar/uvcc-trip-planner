@@ -26,7 +26,9 @@ class Caver {
             this.medi_cert_status = medi_cert_status;
             this.exec_status = exec_status;
 
-            this.trip_day= trip_day.replace(/['"]+/g, ''); //preferred trip day if trip has multiple day options
+            if(this.trip_day){
+                this.trip_day= trip_day.replace(/['"]+/g, ''); //preferred trip day if trip has multiple day options
+            }
             // - - -
             //whether this caver has been designated on a trip
             this.designated = false;

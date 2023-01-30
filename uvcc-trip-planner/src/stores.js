@@ -61,7 +61,7 @@ export const response_mappings = writable({
 
 export const trip_settings = writable({
     "Maximum # of Cavers": 20,
-    "# of Seperate Trip Days": 2,
+    "# of Seperate Trip Days": 1,
     //"Ropes Training Required?": false,
 })
 

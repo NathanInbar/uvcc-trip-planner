@@ -24,7 +24,7 @@
     .listing_header {
         display: inline-block;
         white-space: nowrap;
-        max-width: 30ch;
+        max-width: 45ch;
         overflow: hidden;
         text-overflow: ellipsis;
     }

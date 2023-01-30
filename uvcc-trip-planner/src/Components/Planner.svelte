@@ -58,10 +58,18 @@
             }
 
             let day_pref = caver.trip_day;
-            if (day_pref == '') { day_pref = $response_mappings["Either Day Response"];}
+            if (day_pref == '' || day_pref == undefined && trips.length>1) { day_pref = $response_mappings["Either Day Response"];}
             //if trip day pref not applicable add them to day 1 (default)
-            if(day_pref=='') {
-                Object.values(trips)[0].add_caver(caver);
+            else if(day_pref=='' || day_pref == undefined) {
+                // Object.values(trips)[0].add_caver(caver);
+                //test
+                let min_trip = Object.values(trips)[0];
+                Object.values(trips).forEach(trip => {
+                    if (trip.length < min_trip.length){
+                        min_trip = trip;
+                    }
+                });
+                min_trip.add_caver(caver);
             }
             //designate them to the trip with the least amount of people in it
             else if (day_pref == $response_mappings["Either Day Response"]){
@@ -76,7 +84,7 @@
             }
             //designate them to the day they want
             else{
-
+                console.log(day_pref);
                 trips[day_pref].add_caver(caver);
             }
 
@@ -88,6 +96,12 @@
 
         for(let i = 0; i < days_to_plan; i++)
         {
+            let _trip_name = "";
+            if ($response_mappings["Trip Day Preferences"][i] == undefined){
+                _trip_name = `Day ${i+1}`;
+                $response_mappings["Trip Day Preferences"][i] = _trip_name;
+            }
+
             trips[$response_mappings["Trip Day Preferences"][i]] = new Trip(
                 $response_mappings["Trip Day Preferences"][i], $trip_settings["Maximum # of Cavers"]
             )

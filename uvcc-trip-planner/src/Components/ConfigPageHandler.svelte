@@ -74,6 +74,11 @@
                     
                     )
                 );
+                //yikes
+                if($column_mappings["Misc"]["Trip Day Pref (if applicable)"] == undefined){
+                    _cavers[count].trip_day = undefined;
+                }
+
             count+=1;
         }
         $cavers = _cavers;
