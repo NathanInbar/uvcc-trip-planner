@@ -37,11 +37,11 @@
 		{/each}
 
 		<h4>email strings:</h4>
-		<div class="emStr__container">
+		<div>
 			{#each $finished_trips as trip}
-				<div class="emStrs">
+				<div>
 					<label for="emStr" style="text-decoration:underline">{trip.get_name()}:</label>
-					<p>{trip.get_emails()}</p>
+					<input type="text" value={trip.get_emails()}/>
 				</div>
 			{/each}
 		</div>
@@ -54,15 +54,9 @@
 	.trip_output__container {
 		margin: 1rem;
 	}
-	.emStr__container {
-		display: flex;
-		flex-direction: row;
-	}
-	.emStrs {
-		display: inline-block;
-		max-width: 15rem;
-		overflow-wrap: break-word;
-		margin: 1rem;
+
+	input {
+		margin-bottom: 1rem;
 	}
 
 	hr {
