@@ -46,7 +46,7 @@ class Caver {
      // --   
     is_exec(){return this.exec_status;}
     is_designated(){return this.designated;}
-    set_designated(truthy){this.designated=truthy; console.log(this.firstname);}
+    set_designated(truthy){this.designated=truthy;}
     get_vehicle_ans(){
         return this.vehicle_owner_status;}
     has_cave_exp(){return this.newcomer_cave_status;}
