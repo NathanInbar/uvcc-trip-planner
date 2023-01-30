@@ -108,12 +108,10 @@
         //first pass: designate execs with cars that are 4x4s
         for(let i = 0; i < $cavers.length; i++){
             let caver = $cavers[i];
-            if(caver.is_exec()){
-                if(caver.has_vehicle() && 
+                if(caver.is_exec && 
                     caver.get_vehicle_type()==$response_mappings["Vehicle Capability Reponses"]["Offroad Capable"]){
                         designate_caver(caver);
                     }
-            }
         }
         console.log(`first pass done!`);
         console.log(trips);

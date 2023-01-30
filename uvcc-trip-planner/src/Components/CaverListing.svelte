@@ -3,8 +3,8 @@
     export let caver
 </script>
     <p class="{caver.is_exec() == true ? "exec_member": "base_member"}">
-        <span>
-            #{String(caver.id+1).padStart(2, '0')}: <span class="listing_name">{caver.firstname} {caver.lastname}&nbsp;</span>
+        <span class="listing_header">
+            #{String(caver.id+1).padStart(2, '0')}: <span class="{caver.has_vehicle() != $response_mappings["Vehicle Capability Reponses"]["No Car"] ? "listing_name__driver" : ''}">{caver.firstname} {caver.lastname}</span>&nbsp;
         </span>
         <span class="listing_detail">
             {#if caver.has_vehicle() != $response_mappings["Vehicle Capability Reponses"]["No Car"]}
@@ -21,14 +21,16 @@
         justify-content: space-between;
         margin: 0;
     }
-
-    .listing_name {
-        /* text-decoration: underline; */
+    .listing_header {
         display: inline-block;
         white-space: nowrap;
-        max-width: 25ch;
+        max-width: 30ch;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .listing_name__driver {
+        text-decoration: underline;
+
     }
     .listing_detail {
         opacity: 0.6;
