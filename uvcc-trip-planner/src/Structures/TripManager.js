@@ -35,8 +35,8 @@ class TripManager {
 	get_min_trip(){
 		//gets trip with least amount of people in it
 		let min_trip = this.trips[0];
-		for(const trip of this.trips){
-			if(trip.length < min_trip.length){
+		for(let trip of this.trips){
+			if(trip.get_num_cavers() < min_trip.get_num_cavers()){
 				min_trip = trip;
 			}
 		}
