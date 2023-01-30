@@ -46,7 +46,7 @@ export const column_mappings = writable({
 export const response_mappings = writable({
 	//note: these labels are used for lookup in TripManager object
 	//check TripManager.js after changing a label
-	'Trip Day Preferences': [],
+	'Trip Day Preferences': _debug ? ["Saturday - Sept. 24, 2022","Sunday - Sept. 25, 2022"]:[],
 	'Either Day Response': _debug ? 'Either day is fine!' : '',
 
 	'Vehicle Capability Responses': {
@@ -59,8 +59,8 @@ export const response_mappings = writable({
 export const trip_settings = writable({
 	//note: these labels are used for lookup in TripManager object
 	//check TripManager.js after changing a label
-	'Maximum # of Cavers': 20,
-	'# of Seperate Trip Days': 1,
+	'Maximum # of Cavers': 22,
+	'# of Seperate Trip Days': 2,
 	'Ropes Training Required?': false
 });
 

@@ -44,8 +44,10 @@ class Trip {
 	get_emails() {
 		let emStr = '';
 
-		for (const caver in this.cavers) {
-			emStr = emStr.concat(`${caver.get_email()},`);
+		for (const caver of this.cavers) {
+            let email = caver.get_email();
+			emStr += email;
+            emStr += ',';
 		}
 		return emStr;
 	}

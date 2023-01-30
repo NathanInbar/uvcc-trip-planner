@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import response_mappings from '..stores';
+import { response_mappings } from '../stores';
 
 class Caver {
 	constructor(id, exec_status, info) {
@@ -54,6 +54,9 @@ class Caver {
 	get_name() {
 		return `${this.info['First Name']} ${this.info['Last Name']}`;
 	}
+	get_email() {
+		return this.info['Email'];
+	}
 	get_seats() {
 		return this.info['Vehicle Seat Count'];
 	}
@@ -79,6 +82,9 @@ class Caver {
 	has_no_day_preference() {
 		let either_response = get(response_mappings)['Either Day Response'];
 		return this.info['Trip Day Pref (if applicable)'] == either_response;
+	}
+	get_pref_trip_day() {
+		return this.info['Trip Day Pref (if applicable)'];
 	}
 }
 export default Caver;

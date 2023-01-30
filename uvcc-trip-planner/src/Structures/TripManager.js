@@ -1,8 +1,6 @@
 import { get } from 'svelte/store';
-import DEBUG from '../stores';
-import trip_settings from '../stores';
-import response_mappings from '../stores';
-
+import {DEBUG, trip_settings, response_mappings} from '../stores';
+import Trip from './trip';
 
 class TripManager {
     constructor(){
@@ -30,14 +28,14 @@ class TripManager {
 				_day_name = day_prefs[i];
 			}
 
-            this.trips.push(new Trip(_day_name, max_cavers))
+            this.trips.push(new Trip(_day_name, this.max_cavers))
         }
     }
 
 	get_min_trip(){
 		//gets trip with least amount of people in it
 		let min_trip = this.trips[0];
-		for(trip in this.trips){
+		for(const trip of this.trips){
 			if(trip.length < min_trip.length){
 				min_trip = trip;
 			}
@@ -48,7 +46,7 @@ class TripManager {
 	get_trip_by_name(name){
 		//returns a Trip if one with name is found, else null.
 		let target_trip = null;
-		for(const trip in this.trips){
+		for(let trip of this.trips){
 			if(name == trip.get_name()){
 				target_trip = trip; 
 				return target_trip;

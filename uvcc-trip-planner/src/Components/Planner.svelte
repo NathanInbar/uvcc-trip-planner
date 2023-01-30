@@ -45,7 +45,7 @@
 		for (let i = 0; i < $cavers.length; i++) {
 			let caver = $cavers[i];
 
-			if (caver.is_exec() && !caver.is_designated() && caver.has_car()) {
+			if (caver.is_exec() && !caver.is_designated() && caver.has_vehicle()) {
 				manager.designate_caver(caver);
 			}
 		}
@@ -68,7 +68,7 @@
 		//evaluate seats per trip. seats < max cavers?
 		//yes- fourth pass: add drivers to each trip until seats >= max cavers, or end of list
 		//no- skip
-		for (const trip in manager.get_trips()) {
+		for (const trip of manager.get_trips()) {
 			for (let i = 0; !trip.is_at_seats_capacity() && i < $cavers.length; i++) {
 				let caver = $cavers[i];
 				if (
