@@ -1,5 +1,5 @@
 <script>
-    import {page, headers, column_mappings, cavers, trip_settings, request_plan, exec_list, response_mappings} from "../stores.js";
+    import {DEBUG, page, headers, column_mappings, cavers, trip_settings, request_plan, exec_list, response_mappings} from "../stores.js";
     import HeaderSelect from "./HeaderSelect.svelte";
 	import PageIncrementerBtns from "./PageIncrementerBtns.svelte";
     import Caver from "../Structures/caver.js";
@@ -77,12 +77,14 @@
             count+=1;
         }
         $cavers = _cavers;
-        console.log($cavers);
+        
+        $DEBUG && console.log($cavers);
+        
     }
 
     $: if (files && files[0]) {
         let file = files[0];
-        console.log(`${file.name}: ${file.size} bytes`);
+        $DEBUG && console.log(`${file.name}: ${file.size} bytes`);
         
         const re = /\n|(?:,|\n|^)("(?:(?:"")*[^"]*)*"|[^",\n]*|(?:\n|$))/gm;
         

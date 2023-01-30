@@ -46,8 +46,8 @@ class Caver {
      // --   
     is_exec(){return this.exec_status;}
     is_designated(){return this.designated;}
-    set_designated(truthy){this.designated=truthy;}
-    has_vehicle(){
+    set_designated(truthy){this.designated=truthy; console.log(this.firstname);}
+    get_vehicle_ans(){
         return this.vehicle_owner_status;}
     has_cave_exp(){return this.newcomer_cave_status;}
     has_ropes_exp(){return this.newcomer_ropes_status;}
@@ -55,13 +55,8 @@ class Caver {
     get_email() {return this.email;}
 
     count_seats(){
-        if (!this.has_vehicle()) return 0;
+        if (this.vehicle_seat_count == null) return 0;
         return this.vehicle_seat_count;
-    }
-
-    get_vehicle_type(){
-        if(!this.has_vehicle()) return null;
-        return this.vehicle_type;
     }
 
     get_pref_trip_day(){

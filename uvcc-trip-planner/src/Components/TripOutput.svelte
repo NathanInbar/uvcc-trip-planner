@@ -71,7 +71,5 @@
         justify-content: flex-start;
         margin: 1rem;
     }
-    .listing_main {
-        /*  */
-    }
+
 </style>

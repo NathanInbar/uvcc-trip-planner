@@ -4,11 +4,11 @@
 </script>
     <p class="{caver.is_exec() == true ? "exec_member": "base_member"}">
         <span class="listing_header">
-            #{String(caver.id+1).padStart(2, '0')}: <span class="{caver.has_vehicle() != $response_mappings["Vehicle Capability Reponses"]["No Car"] ? "listing_name__driver" : ''}">{caver.firstname} {caver.lastname}</span>&nbsp;
+            #{String(caver.id+1).padStart(2, '0')}: <span class="{caver.get_vehicle_ans() != $response_mappings["Vehicle Capability Reponses"]["No Car"] ? "listing_name__driver" : ''}">{caver.firstname} {caver.lastname}</span>&nbsp;
         </span>
         <span class="listing_detail">
-            {#if caver.has_vehicle() != $response_mappings["Vehicle Capability Reponses"]["No Car"]}
-                [D][{caver.count_seats()}]{#if caver.has_vehicle() == $response_mappings["Vehicle Capability Reponses"]["Offroad Capable"]}[4x4&nbsp;]
+            {#if caver.get_vehicle_ans() != $response_mappings["Vehicle Capability Reponses"]["No Car"]}
+                [D][{caver.count_seats()}]{#if caver.get_vehicle_ans() == $response_mappings["Vehicle Capability Reponses"]["Offroad Capable"]}[4x4&nbsp;]
                 {:else}[city]
                 {/if}
             {/if}

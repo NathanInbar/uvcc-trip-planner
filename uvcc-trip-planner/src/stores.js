@@ -1,5 +1,7 @@
 import {readable,writable} from 'svelte/store';
 
+export const DEBUG = readable(false);
+
 export const request_plan = writable(false);
 
 export const page = writable(0);
