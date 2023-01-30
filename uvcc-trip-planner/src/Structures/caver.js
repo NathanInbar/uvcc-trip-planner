@@ -52,6 +52,7 @@ class Caver {
     has_cave_exp(){return this.newcomer_cave_status;}
     has_ropes_exp(){return this.newcomer_ropes_status;}
     get_signup_time(){return this.timestamp;}
+    get_email() {return this.email;}
 
     count_seats(){
         if (!this.has_vehicle()) return 0;

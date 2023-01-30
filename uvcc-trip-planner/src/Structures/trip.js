@@ -28,7 +28,8 @@ class Trip
     get_num_cavers(){return this.cavers.length;}
 
     pop(){
-        this.cavers.pop();
+        let caver = this.cavers.pop();
+        caver.designated = false;
     }
 }
 
