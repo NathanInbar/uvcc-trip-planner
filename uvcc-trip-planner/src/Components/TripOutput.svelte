@@ -29,10 +29,12 @@
         {#each Object.entries($finished_trips) as [name,trip]}
             
                 <h4>{name}:<p>[{trip.get_seats()} Seats] [{trip.get_num_cavers()} Cavers]</p></h4>
-
-                {#each trip.get_cavers() as caver}
-                    <CaverListing caver={caver}/>
-                {/each}
+                
+                <div class="listing_main">
+                    {#each trip.get_cavers() as caver}
+                        <CaverListing caver={caver}/>
+                    {/each}
+                </div>
             <div><hr></div>
         {/each}
     <h4>Runners-up:</h4>
@@ -69,5 +71,7 @@
         justify-content: flex-start;
         margin: 1rem;
     }
-
+    .listing_main {
+        /*  */
+    }
 </style>
