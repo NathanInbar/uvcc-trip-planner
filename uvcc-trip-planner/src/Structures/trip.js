@@ -1,39 +1,59 @@
+class Trip {
+	constructor(day_name, max_cavers) {
+		this.day_name = day_name;
+		this.max_cavers = max_cavers;
 
-class Trip
-{
-    constructor(day_name,max_cavers)
-    {
-        this.day_name = day_name;
-        this.cavers = [];
-        this.max_cavers = max_cavers;
-        this.seats = 0;
-    }
+		this.cavers = [];
+		this.seats = 0;
+	}
 
-    add_caver(caver){
-        if (this.is_full_max()) {return;}
-        this.cavers.push(caver);
-        this.seats += caver.count_seats();
-        caver.set_designated(true);
-    }
+	add_caver(caver) {
+		if (this.is_at_max_capacity()) {
+			return;
+		}
 
-    is_full_max(){
-        if (this.cavers.length>=this.max_cavers)
-            return true;
-        return false;
-    }
-    is_seats_full(){
-        return this.seats - this.cavers.length <= 0
-    }
-    get_seats(){return this.seats;}
+		this.cavers.push(caver);
+		this.seats += caver.get_seats();
+		caver.set_designated();
+	}
 
-    get_cavers(){return this.cavers;}
+	is_at_max_capacity() {
+		return this.cavers.length >= this.max_cavers;
+	}
 
-    get_num_cavers(){return this.cavers.length;}
+	is_at_seats_capacity() {
+		return this.seats - this.cavers.length <= 0;
+	}
 
-    pop(){
-        let caver = this.cavers.pop();
-        caver.designated = false;
-    }
+	get_name() {
+		return this.day_name;
+	}
+
+	get_seats() {
+		return this.seats;
+	}
+
+	get_cavers() {
+		return this.cavers;
+	}
+
+	get_num_cavers() {
+		return this.cavers.length;
+	}
+
+	get_emails() {
+		let emStr = '';
+
+		for (const caver in this.cavers) {
+			emStr = emStr.concat(`${caver.get_email()},`);
+		}
+		return emStr;
+	}
+
+	pop_caver() {
+		let caver = this.cavers.pop();
+		caver.set_designated(false);
+	}
 }
 
 export default Trip;

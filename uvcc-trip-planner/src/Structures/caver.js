@@ -1,69 +1,84 @@
+import { get } from 'svelte/store';
+import response_mappings from '..stores';
 
 class Caver {
-    constructor(id,timestamp, firstname, lastname, vnumber, email, 
-        phone, emergency_name, emergency_relation, emergency_phone, 
-        med_ins_status, newcomer_cave_status, newcomer_ropes_status, 
-        vehicle_owner_status, vehicle_seat_count, medi_cert_status, exec_status, trip_day=null)
-        {
-            this.id=id;
-            this.timestamp = timestamp;
-            this.firstname = firstname;
-            this.lastname = lastname;
-            this.vnumber = vnumber;
-            this.email = email;
-            this.phone = phone;
+	constructor(id, exec_status, info) {
+		this.id = id;
+		this.exec_status = exec_status;
+		this.info = info;
+		this.designated = false; //whether this caver has been designated to a trip
 
-            this.emergency_name = emergency_name;
-            this.emergency_relation = emergency_relation;
-            this.emergency_phone = emergency_phone;
+		this.sanitize_info();
+	}
 
-            this.med_ins_status = med_ins_status;
-            this.newcomer_cave_status = newcomer_cave_status;
-            this.newcomer_ropes_status = newcomer_ropes_status;
+	get_info(label) {
+		return this.info[label];
+	}
+	set_info(label, value) {
+		this.info[label] = value;
+	}
 
-            this.vehicle_owner_status = vehicle_owner_status;
-            this.vehicle_seat_count = vehicle_seat_count;
-            this.medi_cert_status = medi_cert_status;
-            this.exec_status = exec_status;
+	sanitize_info() {
+		//sanitize seat count => parse as int
+		let seat_count = this.info['Vehicle Seat Count'];
+		seat_count = seat_count.replace(/\D/g, ''); //get only numbers from string
+		if (seat_count == '')
+			//check empty (no numbers entered).
+			seat_count = 0;
+		else seat_count = parseInt(seat_count);
 
-            if(this.trip_day){
-                this.trip_day= trip_day.replace(/['"]+/g, ''); //preferred trip day if trip has multiple day options
-            }
-            // - - -
-            //whether this caver has been designated on a trip
-            this.designated = false;
+		this.set_info('Vehicle Seat Count', seat_count);
 
-            this.sanitize_seat_count();
-        }
+		//sanitize trip day
+		let trip_day = this.info['Trip Day Pref (if applicable)'];
+		if (trip_day != null || trip_day != undefined) {
+			this.set_info('Trip Day Pref (if applicable)', trip_day.replace(/['"]+/g, '')); //remove quotes added by CSV due to comma in date
+		} else {
+			let either_response = get(response_mappings)['Either Day Response'];
+			this.set_info('Trip Day Pref (if applicable)', either_response);
+		}
+	}
 
-    sanitize_seat_count(){
-        //get only numbers from string
-        this.vehicle_seat_count = this.vehicle_seat_count.replace(/\D/g, "");
-        //check empty (no numbers entered).
-        if(this.vehicle_seat_count == '')
-            this.vehicle_seat_count=0;
-        else
-            this.vehicle_seat_count=parseInt(this.vehicle_seat_count);
-    }
-     // --   
-    is_exec(){return this.exec_status;}
-    is_designated(){return this.designated;}
-    set_designated(truthy){this.designated=truthy;}
-    get_vehicle_ans(){
-        return this.vehicle_owner_status;}
-    has_cave_exp(){return this.newcomer_cave_status;}
-    has_ropes_exp(){return this.newcomer_ropes_status;}
-    get_signup_time(){return this.timestamp;}
-    get_email() {return this.email;}
+	is_exec() {
+		return this.exec_status;
+	}
+	set_exec(truthy = true) {
+		this.exec_status = truthy;
+	}
+	is_designated() {
+		return this.designated;
+	}
+	set_designated(truthy = true) {
+		this.designated = truthy;
+	}
+	get_name() {
+		return `${this.info['First Name']} ${this.info['Last Name']}`;
+	}
+	get_seats() {
+		return this.info['Vehicle Seat Count'];
+	}
+	// - - -
+	get_vehicle_ans() {
+		return this.info['Vehicle Owner Status'];
+	}
+	has_vehicle() {
+		let vehicle_ans = this.get_vehicle_ans();
+		let no_car_response = get(response_mappings)['Vehicle Capability Responses']['No Car'];
 
-    count_seats(){
-        if (this.vehicle_seat_count == null) return 0;
-        return this.vehicle_seat_count;
-    }
+		return vehicle_ans != no_car_response;
+	}
+	has_offroad() {
+		if (!this.has_vehicle()) {
+			return false;
+		}
 
-    get_pref_trip_day(){
-        return this.trip_day;
-    }
-
+		let vehicle_ans = this.get_vehicle_ans();
+		let offroad_reponse = get(response_mappings)['Vehicle Capability Responses']['Offroad Capable'];
+		return vehicle_ans == offroad_reponse;
+	}
+	has_no_day_preference() {
+		let either_response = get(response_mappings)['Either Day Response'];
+		return this.info['Trip Day Pref (if applicable)'] == either_response;
+	}
 }
 export default Caver;
