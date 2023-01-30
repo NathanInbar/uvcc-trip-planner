@@ -60,6 +60,8 @@ class TripManager {
 		//if we only have 1 trip, put them in it
 		if(this.trips.length==1) {this.trips[0].add_caver(caver); return;}
 
+		if(this.req_ropes && !caver.has_ropes_exp()) {return;}
+
 		let either_response = get(response_mappings)["Either Day Response"];
 
 		let caver_day_pref = caver.get_info("Trip Day Pref (if applicable)");

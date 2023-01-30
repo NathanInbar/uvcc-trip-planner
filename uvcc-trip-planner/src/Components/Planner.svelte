@@ -77,6 +77,7 @@
 					caver.has_vehicle()
 				) {
 					//bypasses the manager to force someone who has no preference to join this trip
+					//note: also bypasses ropes training requirement to fill drivers
 					trip.add_caver(caver);
 				}
 			}

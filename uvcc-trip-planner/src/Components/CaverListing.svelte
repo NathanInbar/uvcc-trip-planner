@@ -1,8 +1,10 @@
 <script>
+	import { trip_settings } from '../stores.js';
 	export let caver;
 </script>
 
-<p class={caver.is_exec() ? 'exec_member' : 'base_member'}>
+<p class={caver.is_exec() ? 'exec_member' : 'base_member'}{$trip_settings['Ropes Training Required?'] && !caver.has_ropes_exp() ? ' invalid_member': ''}
+			>
 	<span class="listing_header">
 		#{String(caver.id + 1).padStart(2, '0')}:
 		<span class={caver.has_vehicle() ? 'listing_name__driver' : ''}>{caver.get_name()}</span>&nbsp;
@@ -42,5 +44,9 @@
 
 	.base_member {
 		color: darkslategrey;
+	}
+	
+	.invalid_member {
+		color: darkred;
 	}
 </style>

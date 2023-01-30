@@ -86,5 +86,8 @@ class Caver {
 	get_pref_trip_day() {
 		return this.info['Trip Day Pref (if applicable)'];
 	}
+	has_ropes_exp() {
+		return this.info['Newcomer Status (Ropes)'].toLowerCase() == "yes"
+	}
 }
 export default Caver;
